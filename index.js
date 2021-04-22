@@ -7,7 +7,7 @@ const connection = mysql.createConnection ({
     port: 3306,
     user: "root",
     password: "password1234",
-    database: "employeesDB",
+    database: "employeeDB",
 });
 
 const addViewUpdatePrompt = [
@@ -23,3 +23,23 @@ const addViewUpdatePrompt = [
         ]
     }
 ]
+
+const addViewUpdateAnswer = () => {
+    inquirer.prompt(addViewUpdatePrompt)
+    .then((answer) => {
+        switch (answer.options) {
+            case "View":
+                viewQuestions();
+                break;
+            case "Update":
+                updateQuestions();
+                break;
+            case "Add to":
+                addToQuestions();
+                break;
+            case "Delete":
+                deleteQuestions();
+                break;
+        }
+    })
+}
