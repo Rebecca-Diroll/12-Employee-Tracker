@@ -9,3 +9,17 @@ const connection = mysql.createConnection ({
     password: "password1234",
     database: "employeesDB",
 });
+
+const addViewUpdatePrompt = [
+    {
+        type: "list",
+        name: "addViewUpdate",
+        message: "Would you like to view, update, add to, or delete from the employee database?",
+        choices: [
+            "View",
+            "Update",
+            "Add to",
+            "Delete"
+        ]
+    }
+]
