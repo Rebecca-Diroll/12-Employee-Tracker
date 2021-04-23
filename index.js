@@ -27,7 +27,7 @@ const addViewUpdatePrompt = [
 const addViewUpdateAnswer = () => {
     inquirer.prompt(addViewUpdatePrompt)
     .then((answer) => {
-        switch (answer.options) {
+        switch (answer.addViewUpdate) {
             case "View":
                 viewQuestions();
                 break;
@@ -39,6 +39,44 @@ const addViewUpdateAnswer = () => {
                 break;
             case "Delete":
                 deleteQuestions();
+                break;
+        }
+    })
+}
+
+const viewQuestionsPrompt = [
+    {
+        type: "list",
+        name: "viewQuestionsAnswer",
+        message: "Would you like to view the department, employee roles, a list of employees, employees by manager, or a department budget?",
+        choices: [
+            "Department",
+            "Employee Roles",
+            "Employee List",
+            "Employees by Manager",
+            "Department Budget"
+        ]
+    }
+]
+
+function viewQuestions = () => {
+    inquirer.prompt(viewQuestionsPrompt)
+    .then((answer) => {
+        switch (answer.viewQuestionsAnswer) {
+            case "Department":
+                viewDepartment();
+                break;
+            case "Employee Roles":
+                viewByEmployeeRoles();
+                break;
+            case "Employee List":
+                viewEmployeeList();
+                break;
+            case "Employees by Manager":
+                viewEmployeesByManager();
+                break;
+            case "Department Budget":
+                viewDepartmentBudget();
                 break;
         }
     })
