@@ -19,7 +19,8 @@ const addViewUpdateDeletePrompt = [
             "View",
             "Update",
             "Add to",
-            "Delete"
+            "Delete",
+            "Exit"
         ]
     }
 ]
@@ -40,6 +41,8 @@ const addViewUpdateDeleteAnswer = () => {
             case "Delete":
                 deleteQuestions();
                 break;
+            case "Exit":
+                exit();
         }
     })
 }
@@ -54,7 +57,9 @@ const viewQuestionsPrompt = [
             "View Employee Roles",
             "View Employee List",
             "View Employees by Manager",
-            "View Department Budget"
+            "View Department Budget",
+            "Return to Main Menu",
+            "Exit"
         ]
     }
 ]
@@ -78,6 +83,12 @@ function viewQuestions = () => {
             case "View Department Budget":
                 viewDepartmentBudget();
                 break;
+            case "Return to Main Menue":
+                returnToMainMenu();
+                break;
+            case "Exit":
+                exit();
+                break;
         }
     })
 }
@@ -89,7 +100,9 @@ const updateQuestionsPrompt = [
         message: "Would you like to view the departments, employee roles, a list of employees, employees by manager, or a department budget?",
         choices: [
             "Update Employee Roles",
-            "Update Employee Managers"
+            "Update Employee Managers",
+            "Return to Main Menu",
+            "Exit"
         ]
     }
 ]
@@ -104,6 +117,12 @@ function updateQuestions = () => {
             case "Update Employee Managers":
                 updateEmployeeManagers();
                 break;
+            case "Return to Main Menue":
+                returnToMainMenu();
+                break;
+            case "Exit":
+                exit();
+                break;
         }
     })
 }
@@ -117,6 +136,8 @@ const addQuestionsPrompt = [
             "Add Departments",
             "Add Employee Roles",
             "Add Employees",
+            "Return to Main Menu",
+            "Exit"
         ]
     }
 ]
@@ -134,6 +155,12 @@ function addQuestions = () => {
             case "Add Employees":
                 addEmployees();
                 break;
+            case "Return to Main Menue":
+                returnToMainMenu();
+                break;
+            case "Exit":
+                exit();
+                break;
         }
     })
 }
@@ -147,6 +174,8 @@ const deleteQuestionsPrompt = [
             "Delete Departments",
             "Delete Employee Roles",
             "Delete Employees",
+            "Return to Main Menu",
+            "Exit"
         ]
     }
 ]
@@ -164,6 +193,52 @@ function deleteQuestions = () => {
             case "Delete Employees":
                 deleteEmployees();
                 break;
+            case "Return to Main Menue":
+                returnToMainMenu();
+                break;
+            case "Exit":
+                exit();
+                break;
         }
     })
 }
+
+viewQuestions();
+
+updateQuestions();
+
+addToQuestions();
+
+deleteQuestions();
+
+exit();
+
+
+viewDepartment();
+
+viewByEmployeeRoles();
+
+viewEmployeeList();
+
+viewEmployeesByManager();
+
+viewDepartmentBudget();
+
+
+updateEmployeeRoles();
+
+updateEmployeeManagers();
+
+
+addDepartment();
+
+addEmployeeRoles();
+
+addEmployees();
+
+
+deleteDepartment();
+
+deleteEmployeeRoles();
+
+deleteEmployees();
