@@ -1,4 +1,4 @@
-USE employeeDB;
+USE employee_db;
 
 INSERT INTO dept_table(dept_id, dept_name)
 VALUES

@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS employeeDB;
-CREATE database employeeDB;
+DROP DATABASE IF EXISTS employee_db;
+CREATE database employee_db;
 
 USE employee_db;
 
@@ -28,6 +28,3 @@ CREATE TABLE employee_table (
     FOREIGN KEY (role_id) REFERENCES role_table (role_id),
     FOREIGN KEY (manager_id) REFERENCES employee_table (employee_id)
 )
-
-SELECT * FROM top5000;
-select * from top_albums;
