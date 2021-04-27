@@ -1,6 +1,6 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
-const { rootCertificates } = require("node:tls");
+// const { rootCertificates } = require("node:tls");
 
 const connection = mysql.createConnection ({
     host: "localhost",
@@ -85,36 +85,39 @@ const mainMenu = () => {
     })
 }
 
-viewAllEmployees = () => {
+const viewAllEmployees = () => {
     const query = "Select * FROM employee_table;";
     connection.query(query, (err, results) => {
         if(err) throw err;
         console.table(results);
+        mainMenu();
     })
 };
 
-viewAllEmployeesByDepartment();
+const viewAllEmployeesByDepartment = () => {};
+// find departments, inquire, find the one department, join
+//    const query = "Select * FROM"
 
-viewAllEmployeesByRole();
+const viewAllEmployeesByRole = () => {};
 
-viewAllEmployeesByManager();
+const viewAllEmployeesByManager = () => {};
 
-viewDepartmentSalaryBudget();
+const viewDepartmentSalaryBudget = () => {};
 
-addEmployee();
+const addEmployee = () => {};
 
-addDepartment();
+const addDepartment = () => {};
 
-addEmployeeRole();
+const addEmployeeRole = () => {};
 
-deleteEmployee();
+const deleteEmployee = () => {};
 
-deleteDepartment();
+const deleteDepartment = () => {};
 
-deleteEmployeeRole();
+const deleteEmployeeRole = () => {};
 
-updateEmployeeRole();
+const updateEmployeeRole = () => {};
 
-updateEmployeeManager();
+const updateEmployeeManager = () => {};
 
-exit();
+const exit = () => {};
