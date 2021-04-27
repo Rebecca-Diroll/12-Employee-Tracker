@@ -1,6 +1,6 @@
 USE employeeDB;
 
-INSERT INTO departmentTable(id, dept_name)
+INSERT INTO dept_table(dept_id, dept_name)
 VALUES
 (01, "Accounting"),
 (02, "Engineering"),
@@ -10,7 +10,7 @@ VALUES
 (06, "Manufacturing"),
 (07, "Sales");
 
-INSERT INTO roleTable(id, title, salary, department_id)
+INSERT INTO role_table(role_id, title, salary, dept_id)
 VALUES
 (011, "Accountant", 73000, 01),
 (012, "Accounting Manager", 101000, 01),
@@ -28,7 +28,7 @@ VALUES
 (071, "Sales Representatives", 86000, 07),
 (072, "Sales Manager", 132000, 07);
 
-INSERT INTO employeeTable (id, first_name, last_name, role_id, manager_id)
+INSERT INTO employee_table (employee_id, first_name, last_name, role_id, manager_id)
 VALUES
 (2589, "Liam", "Smith", 011, 6324),
 (6238, "Tyler", "Lopez", 011, 6324),
