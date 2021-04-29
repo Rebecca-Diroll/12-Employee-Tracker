@@ -7,7 +7,7 @@ const connection = mysql.createConnection ({
     port: 3306,
     user: "root",
     password: "password1234",
-    database: "employeeDB",
+    database: "employee_db",
 });
 
 // View Main Menu
@@ -106,7 +106,22 @@ const viewDepartmentSalaryBudget = () => {};
 
 const addEmployee = () => {};
 
-const addDepartment = () => {};
+const addDepartment = () => {
+    inquirer.prompt ({
+        name: "dept_table",
+        type: "input",
+        message: "Enter the new department name: ",
+    })
+        .then((answer) => {
+            const sql = "INSERT INTO dept_table (name) VALUES (?)";
+            connection.query(sql, answer.dept_table, (err, res) => {
+                console.error(err);
+                if (err) throw err;
+                console.log("Department has been added.");
+            });
+            mainMenu();
+        });
+};
 
 const addEmployeeRole = () => {};
 
@@ -121,3 +136,5 @@ const updateEmployeeRole = () => {};
 const updateEmployeeManager = () => {};
 
 const exit = () => {};
+
+mainMenu();
