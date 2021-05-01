@@ -18,6 +18,7 @@ const mainMenuPrompt = [
         message: "Select from the following choices: ",
         choices: [
             "View All Employees",
+            "View All Departments",
             "View All Employees By Department",
             "View All Roles",
             "View All Employees By Role",
@@ -44,14 +45,17 @@ const mainMenu = () => {
             case "View All Employees":
                 viewAllEmployees();
                 break;
+            case "View All Departments":
+                viewAllDepartments();
+                break;
             case "View All Employees By Department":
                 viewAllEmployeesByDepartment();
                 break;
-            case "View All Employees By Role":
-                viewAllEmployeesByRole();
-                break;
             case "View All Roles":
                 viewAllRoles();
+                break;
+            case "View All Employees By Role":
+                viewAllEmployeesByRole();
                 break;
             case "View All Employees By Manager":
                 viewAllEmployeesByManager();
@@ -99,11 +103,11 @@ const viewAllEmployees = () => {
     })
 };
 
-// viewAllRoles works
-const viewAllRoles = () => {
-    const query = "SELECT * FROM role_table;";
+// viewAllDepartments works
+const viewAllDepartments = () => {
+    const query = "SELECT * FROM dept_table;";
     connection.query(query, (err, results) => {
-        if (err) throw err;
+        if(err) throw err;
         console.table(results);
         mainMenu();
     })
@@ -124,6 +128,17 @@ const viewAllEmployeesByDepartment = () => {
 };
 // find departments, inquire, find the one department, join
 //    const query = "Select * FROM"
+
+
+// viewAllRoles works
+const viewAllRoles = () => {
+    const query = "SELECT * FROM role_table;";
+    connection.query(query, (err, results) => {
+        if (err) throw err;
+        console.table(results);
+        mainMenu();
+    })
+};
 
 const viewAllEmployeesByRole = () => {};
 
