@@ -25,7 +25,7 @@ VALUES
 (NULL, "Lawyer", 127000, 5),
 (NULL, "General Laborer", 31000, 6),
 (NULL, "Operations Manager", 103650, 6),
-(NULL, "Sales Representatives", 86000, 7),
+(NULL, "Sales Representative", 86000, 7),
 (NULL, "Sales Manager", 132000, 7);
 
 INSERT INTO employee_table (employee_id, first_name, last_name, role_id, manager_id)

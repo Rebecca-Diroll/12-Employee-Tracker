@@ -19,6 +19,7 @@ const mainMenuPrompt = [
         choices: [
             "View All Employees",
             "View All Employees By Department",
+            "View All Roles",
             "View All Employees By Role",
             "View All Employees By Manager",
             "View Department Salary Budget",
@@ -48,6 +49,9 @@ const mainMenu = () => {
                 break;
             case "View All Employees By Role":
                 viewAllEmployeesByRole();
+                break;
+            case "View All Roles":
+                viewAllRoles();
                 break;
             case "View All Employees By Manager":
                 viewAllEmployeesByManager();
@@ -87,9 +91,19 @@ const mainMenu = () => {
 
 // viewAllEmployees works
 const viewAllEmployees = () => {
-    const query = "Select * FROM employee_table;";
+    const query = "SELECT * FROM employee_table;";
     connection.query(query, (err, results) => {
         if(err) throw err;
+        console.table(results);
+        mainMenu();
+    })
+};
+
+// viewAllRoles works
+const viewAllRoles = () => {
+    const query = "SELECT * FROM role_table;";
+    connection.query(query, (err, results) => {
+        if (err) throw err;
         console.table(results);
         mainMenu();
     })
@@ -123,22 +137,22 @@ const addEmployee = () => {
         {
             type: "input",
             name: "first_name",
-            message: "First Name: "
+            message: "Enter first name: "
         },
         {
             type: "input",
             name: "last_name",
-            message: "Last Name: "
+            message: "Enter last name: "
         },
         {
             type: "input",
             name: "role_id",
-            message: "Role Id: "
+            message: "Enter role id: "
         },
         {
             type: "input",
             name: "manager_id",
-            message: "Mandager Id:"
+            message: "Enter manager id:"
         },
     ])
     .then((answer) => {
@@ -150,6 +164,7 @@ const addEmployee = () => {
         })
         console.log("Employee has been added.");
         viewAllEmployees();
+        mainMenu();
     })
 };
 
@@ -158,7 +173,7 @@ const addDepartment = () => {
     inquirer.prompt ({
         name: "dept_table",
         type: "input",
-        message: "Enter the new department name: ",
+        message: "Enter new department name: ",
     })
     .then((answer) => {
         const sql = "INSERT INTO dept_table (dept_name) VALUES (?)";
@@ -171,57 +186,34 @@ const addDepartment = () => {
     });
 };
 
+// addEmployeeRole works
 const addEmployeeRole = () => {
-    
-    const newEmployeeRole = inquirer
-        .prompt (
+    inquirer.prompt ([
             {
                 type: "input",
                 name: "title",
-                message: "Enter the new employee role: "
-            }
-        );
-
-    connection.query(`SELECT * FROM dept_table`, async (err, res) => {
-        let deptList = res.map(({ dept_id, dept_name }) => (
-            { name: dept_name, value: dept_id }
-        ))
-
-    })
-    (query, (err, results) => {
-        const departmentList = [];
-        for (let i = 0; i < results.length; i++) {
-            departmentList.push(`${results[i].id} ${results[i].name}`);
-        }
-
-        inquirer.prompt ([
-
+                message: "Enter new employee role: "
+            },
             {
                 type: "input",
                 name: "salary",
-                message: "Enter the salary for this role: "
+                message: "Enter salary: "
             },
             {
-                type: "list",
-                name: "department",
-                message: "Choose the department for this role: ",
-                choices: [...departmentList]
-            }
-        ])
-        .then(response => {
-
-        })
-    })
-    
-
+                type: "input",
+                name: "dept_id",
+                message: "Enter department id: "
+            },
+    ])
     .then((answer) => {
-        const sql = "INSERT INTO role_table (title) VALUES (?)";
-        connection.query(sql, answer.role_table, (err, res) => {
-            console.error(err);
-            if (err) throw err;
-            console.log("Employee role has been added.");
-            mainMenu();
-        });
+        connection.query("INSERT INTO role_table SET ?", {
+            title: answer.title,
+            salary: answer.salary,
+            dept_id: answer.dept_id
+        })
+        console.log("Employee role has been added.")
+        viewAllRoles();
+        mainMenu();
     });
 };
 
