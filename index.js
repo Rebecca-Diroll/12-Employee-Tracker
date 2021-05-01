@@ -18,7 +18,7 @@ const mainMenuPrompt = [
         message: "Select from the following choices: ",
         choices: [
             "View All Employees",
-            "View All Employess By Department",
+            "View All Employees By Department",
             "View All Employees By Role",
             "View All Employees By Manager",
             "View Department Salary Budget",
@@ -85,6 +85,7 @@ const mainMenu = () => {
     })
 }
 
+// viewAllEmployees works
 const viewAllEmployees = () => {
     const query = "Select * FROM employee_table;";
     connection.query(query, (err, results) => {
@@ -94,7 +95,19 @@ const viewAllEmployees = () => {
     })
 };
 
-const viewAllEmployeesByDepartment = () => {};
+const viewAllEmployeesByDepartment = () => {
+    const query = "Select * FROM dept_table;";
+    connection.query(query, (err, results) => {
+        if(err) throw err;
+        // display label, but 
+
+    })
+    // 1. get all departments
+    // 2. show an inquire menu list of the departments
+    // 3. get the id of the department
+    // 4. get employees for the department (where dept_id = user_selected_dept)
+    // 5. show the results
+};
 // find departments, inquire, find the one department, join
 //    const query = "Select * FROM"
 
@@ -104,26 +117,113 @@ const viewAllEmployeesByManager = () => {};
 
 const viewDepartmentSalaryBudget = () => {};
 
-const addEmployee = () => {};
+// addEmployee works
+const addEmployee = () => {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first_name",
+            message: "First Name: "
+        },
+        {
+            type: "input",
+            name: "last_name",
+            message: "Last Name: "
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "Role Id: "
+        },
+        {
+            type: "input",
+            name: "manager_id",
+            message: "Mandager Id:"
+        },
+    ])
+    .then((answer) => {
+        connection.query("INSERT into employee_table SET ?", {
+            first_name: answer.first_name,
+            last_name: answer.last_name,
+            role_id: answer.role_id,
+            manager_id: answer.manager_id
+        })
+        console.log("Employee has been added.");
+        viewAllEmployees();
+    })
+};
 
+// addDepartment works
 const addDepartment = () => {
     inquirer.prompt ({
         name: "dept_table",
         type: "input",
         message: "Enter the new department name: ",
     })
-        .then((answer) => {
-            const sql = "INSERT INTO dept_table (name) VALUES (?)";
-            connection.query(sql, answer.dept_table, (err, res) => {
-                console.error(err);
-                if (err) throw err;
-                console.log("Department has been added.");
-            });
+    .then((answer) => {
+        const sql = "INSERT INTO dept_table (dept_name) VALUES (?)";
+        connection.query(sql, answer.dept_table, (err, res) => {
+            console.error(err);
+            if (err) throw err;
+            console.log("Department has been added.");
             mainMenu();
         });
+    });
 };
 
-const addEmployeeRole = () => {};
+const addEmployeeRole = () => {
+    
+    const newEmployeeRole = inquirer
+        .prompt (
+            {
+                type: "input",
+                name: "title",
+                message: "Enter the new employee role: "
+            }
+        );
+
+    connection.query(`SELECT * FROM dept_table`, async (err, res) => {
+        let deptList = res.map(({ dept_id, dept_name }) => (
+            { name: dept_name, value: dept_id }
+        ))
+
+    })
+    (query, (err, results) => {
+        const departmentList = [];
+        for (let i = 0; i < results.length; i++) {
+            departmentList.push(`${results[i].id} ${results[i].name}`);
+        }
+
+        inquirer.prompt ([
+
+            {
+                type: "input",
+                name: "salary",
+                message: "Enter the salary for this role: "
+            },
+            {
+                type: "list",
+                name: "department",
+                message: "Choose the department for this role: ",
+                choices: [...departmentList]
+            }
+        ])
+        .then(response => {
+
+        })
+    })
+    
+
+    .then((answer) => {
+        const sql = "INSERT INTO role_table (title) VALUES (?)";
+        connection.query(sql, answer.role_table, (err, res) => {
+            console.error(err);
+            if (err) throw err;
+            console.log("Employee role has been added.");
+            mainMenu();
+        });
+    });
+};
 
 const deleteEmployee = () => {};
 
@@ -131,10 +231,51 @@ const deleteDepartment = () => {};
 
 const deleteEmployeeRole = () => {};
 
-const updateEmployeeRole = () => {};
+const updateEmployeeRole = () => {
+    let id = 0;
+    const query = "Select * FROM employee_table;";
+    connection.query(query, (err, results) => {
+        
+
+        let employeeList = results.map(({ employee_id, first_name, last_name, role_id, manager_id }) => (
+            { name: `${first_name} ${last_name}`, id: employee_id }
+        ))
+
+
+         
+        const employeeNames = employeeList.map(x => x.name);
+        const employeeIds = employeeList.map(x => x.id);
+      
+        
+     
+        inquirer.prompt ([
+            {
+                type: "list",
+                name: "pickUser",
+                message: "Choose employee to update role: ",
+                choices: [...employeeNames]
+            }
+        ]).then(response => {
+    const employeeLocation = employeeNames.indexOf(response.pickUser);
+            id = employeeIds[employeeLocation];
+
+        })
+    })
+
+
+
+    // const query = "UPDATE employee_table SET role_id = ? WHERE employee_id = ?";
+    // connection.query(query, [14, 25], (err, results) => {
+    //     if(err) throw err;
+    //     // console.table(results);
+    //     mainMenu();
+    // })
+};
 
 const updateEmployeeManager = () => {};
 
-const exit = () => {};
+const exit = () => {
+    process.exit(0);
+};
 
 mainMenu();
