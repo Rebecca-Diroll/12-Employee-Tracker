@@ -19,19 +19,19 @@ const mainMenuPrompt = [
         choices: [
             "View All Employees",
             "View All Departments",
-            "View All Employees By Department",
+            // "View All Employees By Department",
             "View All Roles",
-            "View All Employees By Role",
-            "View All Employees By Manager",
-            "View Department Salary Budget",
+            // "View All Employees By Role",
+            // "View All Employees By Manager",
+            // "View Department Salary Budget",
             "Add Employee",
             "Add Department",
             "Add Employee Role",
-            "Delete Employee",
-            "Delete Department",
-            "Delete Employee Role",
+            // "Delete Employee",
+            // "Delete Department",
+            // "Delete Employee Role",
             "Update Employee Role",
-            "Update Employee Manager",
+            // "Update Employee Manager",
             "Exit"
         ]
     }
@@ -48,21 +48,21 @@ const mainMenu = () => {
             case "View All Departments":
                 viewAllDepartments();
                 break;
-            case "View All Employees By Department":
-                viewAllEmployeesByDepartment();
-                break;
+            // case "View All Employees By Department":
+            //     viewAllEmployeesByDepartment();
+            //     break;
             case "View All Roles":
                 viewAllRoles();
                 break;
-            case "View All Employees By Role":
-                viewAllEmployeesByRole();
-                break;
-            case "View All Employees By Manager":
-                viewAllEmployeesByManager();
-                break;
-            case "View Department Salary Budget":
-                viewDepartmentSalaryBudget();
-                break;
+            // case "View All Employees By Role":
+            //     viewAllEmployeesByRole();
+            //     break;
+            // case "View All Employees By Manager":
+            //     viewAllEmployeesByManager();
+            //     break;
+            // case "View Department Salary Budget":
+            //     viewDepartmentSalaryBudget();
+            //     break;
             case "Add Employee":
                 addEmployee();
                 break;
@@ -72,20 +72,20 @@ const mainMenu = () => {
             case "Add Employee Role":
                 addEmployeeRole();
                 break;
-            case "Delete Employee":
-                deleteEmployee();
-                break;
-            case "Delete Department":
-                deleteDepartment();
-                break;
-            case "Delete Employee Role":
-                deleteEmployeeRole();
-                break;
+            // case "Delete Employee":
+            //     deleteEmployee();
+            //     break;
+            // case "Delete Department":
+            //     deleteDepartment();
+            //     break;
+            // case "Delete Employee Role":
+            //     deleteEmployeeRole();
+            //     break;
             case "Update Employee Role":
                 updateEmployeeRole();
                 break;
-            case "Update Employee Manager":
-                updateEmployeeManager();
+            // case "Update Employee Manager":
+            //     updateEmployeeManager();
             case "Exit":
                 exit();
                 break;
@@ -113,22 +113,7 @@ const viewAllDepartments = () => {
     })
 };
 
-const viewAllEmployeesByDepartment = () => {
-    const query = "Select * FROM dept_table;";
-    connection.query(query, (err, results) => {
-        if(err) throw err;
-        // display label, but 
-
-    })
-    // 1. get all departments
-    // 2. show an inquire menu list of the departments
-    // 3. get the id of the department
-    // 4. get employees for the department (where dept_id = user_selected_dept)
-    // 5. show the results
-};
-// find departments, inquire, find the one department, join
-//    const query = "Select * FROM"
-
+// const viewAllEmployeesByDepartment = () => {};
 
 // viewAllRoles works
 const viewAllRoles = () => {
@@ -142,9 +127,9 @@ const viewAllRoles = () => {
 
 const viewAllEmployeesByRole = () => {};
 
-const viewAllEmployeesByManager = () => {};
+// const viewAllEmployeesByManager = () => {};
 
-const viewDepartmentSalaryBudget = () => {};
+// const viewDepartmentSalaryBudget = () => {};
 
 // addEmployee works
 const addEmployee = () => {
@@ -232,54 +217,38 @@ const addEmployeeRole = () => {
     });
 };
 
-const deleteEmployee = () => {};
+// const deleteEmployee = () => {};
 
-const deleteDepartment = () => {};
+// const deleteDepartment = () => {};
 
-const deleteEmployeeRole = () => {};
+// const deleteEmployeeRole = () => {};
 
+// updateEmployeeRole works
 const updateEmployeeRole = () => {
-    let id = 0;
-    const query = "Select * FROM employee_table;";
-    connection.query(query, (err, results) => {
-        
-
-        let employeeList = results.map(({ employee_id, first_name, last_name, role_id, manager_id }) => (
-            { name: `${first_name} ${last_name}`, id: employee_id }
-        ))
-
-
-         
-        const employeeNames = employeeList.map(x => x.name);
-        const employeeIds = employeeList.map(x => x.id);
-      
-        
-     
-        inquirer.prompt ([
-            {
-                type: "list",
-                name: "pickUser",
-                message: "Choose employee to update role: ",
-                choices: [...employeeNames]
-            }
-        ]).then(response => {
-    const employeeLocation = employeeNames.indexOf(response.pickUser);
-            id = employeeIds[employeeLocation];
-
-        })
-    })
-
-
-
-    // const query = "UPDATE employee_table SET role_id = ? WHERE employee_id = ?";
-    // connection.query(query, [14, 25], (err, results) => {
-    //     if(err) throw err;
-    //     // console.table(results);
-    //     mainMenu();
-    // })
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "employee_id",
+            message: "Enter the employee id: "
+        },
+        {
+            type: "input",
+            name: "role_id",
+            message: "Enter updated role id: "
+        },
+    ])
+    .then ((answer) => {
+        const query = `UPDATE employee_table SET role_id = ${answer.role_id} WHERE employee_id = ${answer.employee_id};`
+        connection.query(query, (err, res) => {
+            console.error(err);
+            if (err) throw err;
+            console.log("Employee role has been update.");
+            mainMenu();
+        });
+    });
 };
 
-const updateEmployeeManager = () => {};
+// const updateEmployeeManager = () => {};
 
 const exit = () => {
     process.exit(0);
