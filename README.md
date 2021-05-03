@@ -21,5 +21,8 @@ GitHub Repository: https://github.com/Rebecca-Diroll/12-Employee-Tracker
 Initial Selection
 ![Initial Selection](/assets/01-Initial-Selection.jpg)
 
-
+View All Employees
 ![View All Employees](/assets/02-View-All-Employees.jpg)
+
+View All Employee Roles
+![View All Roles](/assets/03-View-All-Roles.jpg)
